@@ -163,3 +163,14 @@ func (p StringSlice) Sort()              { sort.Sort(p) }
 func Sort(a []string) {
 	sort.Sort(StringSlice(a))
 }
+
+type StringCaseSlice []string
+
+func (p StringCaseSlice) Len() int           { return len(p) }
+func (p StringCaseSlice) Less(i, j int) bool { return naturalComp(p[i], p[j], true) < 0 }
+func (p StringCaseSlice) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
+func (p StringCaseSlice) Sort()              { sort.Sort(p) }
+
+func SortCase(a []string) {
+	sort.Sort(StringCaseSlice(a))
+}
