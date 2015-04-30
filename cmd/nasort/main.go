@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-var f = flag.Bool("f", "fold", true)
+var f = flag.Bool("f", true, "fold case")
 
 func main() {
 	flag.Parse()
