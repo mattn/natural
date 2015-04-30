@@ -13,17 +13,17 @@ var f = flag.Bool("f", true, "fold case")
 func main() {
 	flag.Parse()
 
-	var l lines
+	var lines []string
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
-		l = append(l, scanner.Text())
+		lines = append(lines, scanner.Text())
 	}
 	if *f {
-		natural.SortCase(l)
+		natural.SortCase(lines)
 	} else {
-		natural.Sort(l)
+		natural.Sort(lines)
 	}
-	for _, line := range l {
+	for _, line := range lines {
 		fmt.Println(line)
 	}
 }
