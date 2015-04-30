@@ -29,7 +29,7 @@ func main() {
 
 ## License
 
-This is rewrite of [nasort](http://sourcefrog.net/projects/natsort/). So made available under the same license as zlib.
+This is rewrite of [natsort](http://sourcefrog.net/projects/natsort/). So made available under the same license as zlib.
 
 ## Author
 
