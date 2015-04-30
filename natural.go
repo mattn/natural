@@ -5,7 +5,7 @@ import (
 	"unicode"
 )
 
-func CompRight(ra, rb []rune) int {
+func compRight(ra, rb []rune) int {
 	bias := 0
 	la, lb := len(ra), len(rb)
 	var ca, cb rune
@@ -45,7 +45,7 @@ func CompRight(ra, rb []rune) int {
 	return 0
 }
 
-func CompLeft(ra, rb []rune) int {
+func compLeft(ra, rb []rune) int {
 	la, lb := len(ra), len(rb)
 	var ca, cb rune
 	i := 0
@@ -115,12 +115,12 @@ func naturalComp(a, b string, foldCase bool) int {
 		if unicode.IsNumber(ca) && unicode.IsNumber(cb) {
 			var r int
 			if ca == '0' || cb == '0' {
-				r = CompLeft(ra[ia:], rb[ib:])
+				r = compLeft(ra[ia:], rb[ib:])
 				if r != 0 {
 					return r
 				}
 			} else {
-				r = CompRight(ra[ia:], rb[ib:])
+				r = compRight(ra[ia:], rb[ib:])
 				if r != 0 {
 					return r
 				}
@@ -145,14 +145,27 @@ func naturalComp(a, b string, foldCase bool) int {
 	return 0
 }
 
+// NaturalComp behave like strcmp but natural comparing.
 func NaturalComp(a, b string) int {
 	return naturalComp(a, b, false)
 }
 
+// NaturalCaseComp behave like strcmp but natural comparing with fold case.
 func NaturalCaseComp(a, b string) int {
 	return naturalComp(a, b, true)
 }
 
+// Sort do natural sort.
+func Sort(a []string) {
+	sort.Sort(StringSlice(a))
+}
+
+// SortCase do natural sort with fold case.
+func SortCase(a []string) {
+	sort.Sort(StringCaseSlice(a))
+}
+
+// StringSlice implement sort.Sorter interface by natural comparing.
 type StringSlice []string
 
 func (p StringSlice) Len() int           { return len(p) }
@@ -160,17 +173,10 @@ func (p StringSlice) Less(i, j int) bool { return naturalComp(p[i], p[j], false)
 func (p StringSlice) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
 func (p StringSlice) Sort()              { sort.Sort(p) }
 
-func Sort(a []string) {
-	sort.Sort(StringSlice(a))
-}
-
+// StringCaseSlice implement sort.Sorter interface by natural comparing with fold case.
 type StringCaseSlice []string
 
 func (p StringCaseSlice) Len() int           { return len(p) }
 func (p StringCaseSlice) Less(i, j int) bool { return naturalComp(p[i], p[j], true) < 0 }
 func (p StringCaseSlice) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
 func (p StringCaseSlice) Sort()              { sort.Sort(p) }
-
-func SortCase(a []string) {
-	sort.Sort(StringCaseSlice(a))
-}
