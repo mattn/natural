@@ -1,6 +1,7 @@
 package natural
 
 import (
+	"sort"
 	"unicode"
 )
 
@@ -150,4 +151,15 @@ func NaturalComp(a, b string) int {
 
 func NaturalCaseComp(a, b string) int {
 	return naturalComp(a, b, true)
+}
+
+type StringSlice []string
+
+func (p StringSlice) Len() int           { return len(p) }
+func (p StringSlice) Less(i, j int) bool { return naturalComp(p[i], p[j], false) < 0 }
+func (p StringSlice) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
+func (p StringSlice) Sort()              { sort.Sort(p) }
+
+func Sort(a []string) {
+	sort.Sort(StringSlice(a))
 }
